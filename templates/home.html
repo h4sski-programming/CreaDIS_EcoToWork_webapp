@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block title %}Home page{% endblock %}
+
+{% block content %}
+<h3 class="container">Today is {{ today }}</h3>
+<table class="table table-striped table-bordered table-hover max-width">
+    <tr>
+        <th class="align-bottom" scope="col">Person</th>
+        <th class="align-bottom" scope="col">Type (bike, scooter, foot)</th>
+        {% for i in list_of_days %}
+            <th class="align-bottom" scope="col">{{ i }}</th>
+        {% endfor %}
+        <th class="align-bottom" scope="col">Total</th>
+    </tr>
+    <tr>
+        <td scope="row">{{ user.first_name + ' ' + user.last_name }}</td>
+        <td>bike</td>
+        {% for i in list_of_days %}
+            <td></td>
+        {% endfor %}
+        <td>SUM</td>
+    </tr>
+        {% for u in users %}
+        {% if u != user %}
+        <tr>
+            <td scope="row">{{ u.first_name + ' ' + u.last_name }}</td>
+        <td>bike</td>
+        {% for i in list_of_days %}
+            <td></td>
+        {% endfor %}
+        <td>SUM</td>
+    </tr>
+    {% endif %}
+    {% endfor %}
+</table>
+<div class="container">
+    <h3>Add or update value</h3>
+    <form method="POST">
+        <div class="row form-group">
+            <div class="col-auto">
+                <label for="inputValueDate">Date if activity</label>
+            </div>
+            <div class="col-auto">
+                <input type="date" class="form-control" id="inputValueDate" name="inputValueDate" placeholder="">
+            </div>
+        </div>
+        <div class="row form-group">
+            <div class="col-auto">
+                <label for="inputValue">Distance [km]</label>
+            </div>
+            <div class="col-auto">
+                <input type="number" class="form-control" id="inputValue" name="inputValue" placeholder="">
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+{% endblock %}

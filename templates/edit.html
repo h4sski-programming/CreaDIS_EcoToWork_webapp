@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}Edit{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h3>{{ month }}</h3> 
+    <p>Values must be in [km].</p>
+    <form method="POST">
+        <table class="table table-striped table-bordered table-hover">
+            <tr>
+                <th scope="col">Monday</th>
+                <th scope="col">Tuesday</th>
+                <th scope="col">Wednesday</th>
+                <th scope="col">Thursday</th>
+                <th scope="col">Friday</th>
+                <th scope="col">Saturday</th>
+                <th scope="col">Sunday</th>
+            </tr>
+
+            <div class="form-group">
+                {% for j in range(6) %}
+                <tr scope="row">
+                    {% for i in range(7) %}
+                    <td>
+                        {% if (i - first_month_day_number + j*7) < days_in_month and (i + j*7 + 1) > first_month_day_number %}
+                            <p class="small" style="margin:0">{{ i - first_month_day_number + j*7 + 1 }}</p>
+
+                            <div class="">
+                                <input type="number" class="form-control text-center" id="distance" name="distance" placeholder="{{ test_list_to_display[i - first_month_day_number + j*7] }}">
+                            </div>
+                            <div>
+                                <select id="activity" name="activity">
+                                    <option value="" selected></option>
+                                    <option value="bike">bike</option>
+                                    <option value="foot">foot</option>
+                                    <option value="scooter">scooter</option>
+                                    <option value="scateboard">scateboard</option>
+                                </select>
+                            </div>
+                        {% else %}
+                            <a> </a>
+                        {% endif %}
+                    </td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </div>
+        </table>
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="reset" class="btn btn-danger">Cancel</button>
+    </form>
+</div>
+{% endblock %}

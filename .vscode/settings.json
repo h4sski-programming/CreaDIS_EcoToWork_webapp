@@ -1,0 +1,5 @@
+{
+    "prettier.printWidth": 70,
+    "prettier.singleAttributePerLine": true,
+    "prettier.tabWidth": 4
+}

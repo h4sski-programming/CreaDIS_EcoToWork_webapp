@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}{{ user.first_name + ' ' + user.last_name }} - profile{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>{{ user.first_name + ' ' + user.last_name }}</h1>
+    <table class="table table-striped table-bordered">
+        <tr>
+            <td scope="row">Name</td>
+            <td>{{ user.first_name + ' ' + user.last_name }}</td>
+        </tr>
+        <tr>
+            <td scope="row">Email</td>
+            <td>{{ user.email }}</td>
+        </tr>
+        <tr>
+            <td scope="row">Total activity sum</td>
+            <td>50 km</td>
+        </tr>
+        <tr>
+            <td scope="row">Role</td>
+            <td>{{ user.role }}</td>
+        </tr>
+</table>
+</div>
+{% endblock %}
