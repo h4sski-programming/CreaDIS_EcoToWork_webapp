@@ -8,7 +8,7 @@ class Activity(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     distance = db.Column(db.Integer)
-    date_of_activity = db.Column(db.Date())
+    date_of_activity = db.Column(db.Date(), unique=True)
     activity_type = db.Column(db.String(150))
     date_of_submit = db.Column(
         db.DateTime(timezone=True), default=func.now())

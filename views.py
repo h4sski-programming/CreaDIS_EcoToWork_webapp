@@ -28,14 +28,18 @@ def edit():
                 if int(d) < 0:
                     flash(
                         'Distance values must be greather than 0, please re-type your values', category='error')
-                elif a == '':
+                elif a == '' and int(d) != 0:
                     flash('You must select activity type', category='error')
                 else:
-                    print(i, d, a)
                     new_activity_date = date(today.year, today.month, i+1)
-                    new_activity = Activity(
-                        user_id=user.id, distance=d, date_of_activity=new_activity_date, activity_type=a)
-                    db.session.add(new_activity)
+                    if new_activity_date in user.activity:
+                        user.activity.filter(date_of_activity=new_activity_date).\
+                            update({'distance': d, 'activity_type': a})
+                    else:
+                        new_activity = Activity(
+                            user_id=user.id, distance=d, date_of_activity=new_activity_date, activity_type=a)
+                        db.session.add(new_activity)
+                        db.session.commit()
                     flash(
                         f'At day {today.year}-{today.month}-{ i + 1 } you added value = {d} [km] with activity type {a}.', category='success')
 
@@ -65,18 +69,20 @@ def edit():
     else:
         days_in_month = 30
 
-    # testing purpouse of the list to display values
-    test_list_to_display = [i for i in range(1, 30)]
+    distance_list = []
+    activity_type_list = []
+    start_date = date(2022, 10, 1)
+    end_date = date(2022, 10, 31)
+    for current_activity in user.activity:
+        if start_date <= current_activity.date_of_activity <= end_date:
+            distance_list.append(current_activity.distance)
+            activity_type_list.append(current_activity.activity_type)
 
-    # user_activity = Activity.query.filter_by(
-    #     user_id=user.id).first()
-    # print(dir(user_activity))
-    # print(user_activity)
-    return render_template('edit.html', user=user, month=month, days_in_month=days_in_month, first_month_day_number=first_month_day_number, test_list_to_display=test_list_to_display)
+    return render_template('edit.html', user=user, today=today, date=date, month=month, days_in_month=days_in_month, first_month_day_number=first_month_day_number, distance_list=distance_list, activity_type_list=activity_type_list)
 
 
-@views.route('/', methods=['GET', 'POST'])
-@login_required
+@ views.route('/', methods=['GET', 'POST'])
+@ login_required
 def home():
     user = current_user
     users = User.query.order_by('first_name')
