@@ -30,7 +30,7 @@ def main():
     app.register_blueprint(views, url_prefix='/')
     app.register_blueprint(auth, url_prefix='/')
 
-    from models import User,  Activity
+    from models import User, Activity
     create_db(app)
 
     login_manager = LoginManager()
@@ -44,12 +44,3 @@ def main():
 
 # if __name__ == '__main__':
 main()
-
-# @app.route('/')
-# def home():
-#     content = render_template(
-#         'hello_there.html',
-#         title = 'Title fom python file',
-#         var = 'h4sski'
-#     )
-#     return content
